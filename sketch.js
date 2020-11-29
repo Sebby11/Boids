@@ -9,18 +9,18 @@ function setup() {
 	//triButton.position(10, 10);
 	triButton.mousePressed(changeTri);
 
-	slider = createSlider(1, 50, 25);
-
 	beeButton = createButton('Bee');
 	//beeButton.position(70, 10);
 	beeButton.mousePressed(changeBee);
 
+	slider = createSlider(1, 50, 25);
+
 	followMouseButton = createButton('Follow Mouse');
-	followMouseButton.position(550, 850);
+	//followMouseButton.position(windowWidth - 600, 850);
 	followMouseButton.mousePressed(randToFollow);
 
 	followMouseButton = createButton('Random Flock');
-	followMouseButton.position(450, 850);
+	//followMouseButton.position(triButton.position.x, 1000);
 	followMouseButton.mousePressed(followToRand);
 
 	createCanvas(700,700);
