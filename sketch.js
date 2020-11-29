@@ -2,6 +2,7 @@ const flock = [];
 typeFlock = 'Bee';
 let whoFollow = false
 slideVal = 25;
+path = [[369, 37], [77, 110], [233, 439], [156, 404], [105, 217]];
 
 function setup() {
 	// put setup code here
@@ -13,19 +14,31 @@ function setup() {
 	//beeButton.position(70, 10);
 	beeButton.mousePressed(changeBee);
 
-	slider = createSlider(1, 50, 25);
+	slider = createSlider(1, 50, 1);
 
 	followMouseButton = createButton('Follow Mouse');
 	//followMouseButton.position(windowWidth - 600, 850);
 	followMouseButton.mousePressed(randToFollow);
 
-	followMouseButton = createButton('Random Flock');
+	randFlockButton = createButton('Random Flock');
 	//followMouseButton.position(triButton.position.x, 1000);
-	followMouseButton.mousePressed(followToRand);
+	randFlockButton.mousePressed(followToRand);
+
+	followPathButton = createButton('Follow flower Path')
+	followPathButton.mousePressed(followPath);
+
+
 
 	createCanvas(700,700);
+
+	//Create Flock
 	for(let i = 0; i < 25; i++)
 		flock.push(new Boid());
+
+	//Create Path
+	path = new Path(path);
+	path.addPoint(600, 600);
+	console.log(path.getPath());
 }
 
 function draw() {
@@ -46,8 +59,12 @@ function draw() {
 	slideVal = slider.value();
 	background(0);
 
+	//Path
+	path.show();
+
+	//Boids
 	for(let boid of flock){
-		boid.flock(flock);
+		boid.flock(flock, path.pointPath);
 		boid.ifAtEdge();
 		boid.update();
 		if(typeFlock == 'Bee')
@@ -68,9 +85,13 @@ function changeBee(){
 }
 
 function randToFollow(){
-	whoFollow = true;
+	whoFollow = 'followMouse';
 }
 
 function followToRand(){
-	whoFollow = false;
+	whoFollow = 'random';
+}
+
+function followPath(){
+	whoFollow = 'path';
 }

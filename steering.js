@@ -11,7 +11,7 @@ class Boid {
 		//set speed limit
 		this.maxSpeed = 4;
 		//false - rand  / true - follow mouse
-		this.randOrFollow = true;
+		this.randOrFollow = 'random';
 	}
 
 	ifAtEdge(){
@@ -121,8 +121,8 @@ class Boid {
 		return avgVel;
 	}
 
-	flock(fellowBoids){
-		if(this.randOrFollow == true){
+	flock(fellowBoids, pointPath){
+		if(this.randOrFollow == 'followMouse'){
 			let mouseLocation = createVector(mouseX, mouseY);
 			let direction = p5.Vector.sub(mouseLocation, this.position);
 			direction.normalize();
@@ -138,7 +138,7 @@ class Boid {
 			this.acceleration.add(alignment);
 			//this.acceleration.add(cohesion);
 		}
-		else if(this.randOrFollow == false){
+		else if(this.randOrFollow == 'random'){
 			this.acceleration.mult(0);
 			let alignment = this.avg(fellowBoids, 'alignment');
 			let cohesion = this.avg(fellowBoids, 'cohesion');
@@ -147,6 +147,24 @@ class Boid {
 			this.acceleration.add(separation);
 			this.acceleration.add(alignment);
 			this.acceleration.add(cohesion);
+		}
+		else if(this.randOrFollow == 'path'){
+			//TODO: If within ~15 of the flower then move onto the next
+
+			//follow points (start w/ first in list of pointPath)
+			let pointLocation = pointPath
+			let tmpPoint = createVector(pointLocation[0][0], pointLocation[0][1])
+			let direction = p5.Vector.sub(tmpPoint, this.position);
+			direction.normalize();
+			direction.mult(0.5);
+			this.acceleration = direction;
+
+			let alignment = this.avg(fellowBoids, 'alignment');
+			let cohesion = this.avg(fellowBoids, 'cohesion');
+			let separation = this.avg(fellowBoids, 'separation');
+			//Since mass =1 then A = F/1
+			this.acceleration.add(separation);
+			this.acceleration.add(alignment);
 		}
 	}
 }
