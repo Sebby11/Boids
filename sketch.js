@@ -91,6 +91,9 @@ function followToRand(){
 }
 
 function followPath(){
+	if(path.pointPath.length == 0)
+		return
+	console.log('here')
 	whoFollow = 'path';
 }
 
@@ -98,6 +101,6 @@ function mouseReleased(){
 	if(mouseX > 699 || mouseY > 699)
 		return
 	path.addPoint(mouseX, mouseY);
-	//console.log(path.pointPath);
+	console.log(path.pointPath.length);
 	//console.log(mouseX, " ", mouseY);
 }
