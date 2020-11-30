@@ -2,7 +2,7 @@ const flock = [];
 typeFlock = 'Bee';
 let whoFollow = false
 slideVal = 25;
-path = [[369, 37], [77, 110], [233, 439], [156, 404], [105, 217]];
+path = [];
 
 function setup() {
 	// put setup code here
@@ -37,8 +37,6 @@ function setup() {
 
 	//Create Path
 	path = new Path(path);
-	path.addPoint(600, 600);
-	console.log(path.getPath());
 }
 
 function draw() {
@@ -94,4 +92,12 @@ function followToRand(){
 
 function followPath(){
 	whoFollow = 'path';
+}
+
+function mouseReleased(){
+	if(mouseX > 699 || mouseY > 699)
+		return
+	path.addPoint(mouseX, mouseY);
+	//console.log(path.pointPath);
+	//console.log(mouseX, " ", mouseY);
 }

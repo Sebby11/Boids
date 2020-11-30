@@ -1,3 +1,4 @@
+var cnt = 0;
 class Boid {
 	constructor() {
 		//vectors rooted @ (0, 0)
@@ -153,7 +154,20 @@ class Boid {
 
 			//follow points (start w/ first in list of pointPath)
 			let pointLocation = pointPath
-			let tmpPoint = createVector(pointLocation[0][0], pointLocation[0][1])
+			let tmpPoint = createVector(pointLocation[cnt][0], pointLocation[cnt][1])
+			let distance = dist(
+							this.position.x,
+							this.position.y,
+							pointLocation[cnt][0],
+							pointLocation[cnt][1])
+
+			//if it's close enough to the flower
+			if(distance <= 10){
+				cnt++;
+				if(cnt > pointLocation.length - 1)
+					cnt = 0;
+			}
+
 			let direction = p5.Vector.sub(tmpPoint, this.position);
 			direction.normalize();
 			direction.mult(0.5);
