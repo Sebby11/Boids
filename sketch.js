@@ -24,8 +24,11 @@ function setup() {
 	//followMouseButton.position(triButton.position.x, 1000);
 	randFlockButton.mousePressed(followToRand);
 
-	followPathButton = createButton('Follow flower Path')
+	followPathButton = createButton('Follow flower Path');
 	followPathButton.mousePressed(followPath);
+
+	clearFlowers = createButton('Clear Flowers');
+	clearFlowers.mousePressed(ridFlowers);
 
 
 
@@ -95,6 +98,14 @@ function followPath(){
 		return
 	console.log('here')
 	whoFollow = 'path';
+}
+
+function ridFlowers(){
+	if(whoFollow == 'path'){
+		followToRand();
+	}
+	draw();
+	path.pointPath = [];
 }
 
 function mouseReleased(){
