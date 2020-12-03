@@ -1,6 +1,6 @@
 const flock = [];
 typeFlock = 'Bee';
-let whoFollow = false
+let whoFollow = 'random'
 slideVal = 25;
 path = [];
 
